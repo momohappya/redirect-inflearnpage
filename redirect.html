@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirecting...</title>
+    <script>
+        window.onload = function() {
+            // URL에서 email 파라미터 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get("email");
+
+            if (email) {
+                // Zapier Webhook 호출
+                fetch("https://hooks.zapier.com/hooks/catch/18371653/2l55iaq/?email=" + encodeURIComponent(email))
+                    .then(() => {
+                        // Webhook 호출 후 1초 뒤에 인프런 홈페이지로 이동
+                        setTimeout(() => {
+                            window.location.href = "https://www.inflearn.com/";
+                        }, 1000);
+                    })
+                    .catch(() => {
+                        // 실패해도 바로 인프런 홈페이지로 이동
+                        window.location.href = "https://www.inflearn.com/";
+                    });
+            } else {
+                // 이메일 파라미터가 없으면 바로 인프런 홈페이지로 이동
+                window.location.href = "https://www.inflearn.com/";
+            }
+        };
+    </script>
+</head>
+<body>
+    <p>잠시만 기다려 주세요. 자동으로 인프런 홈페이지로 이동합니다...</p>
+</body>
+</html>
