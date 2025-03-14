@@ -11,32 +11,20 @@
             const email = urlParams.get("email");
 
             if (email) {
-                // 중복 실행 방지를 위한 변수 설정
-                let webhookCalled = false;
+                // Webhook을 백그라운드에서 실행하고 바로 리디렉트
+                fetch("https://hooks.zapier.com/hooks/catch/18371653/2l55iaq/?email=" + encodeURIComponent(email), { method: "POST" });
 
-                if (!webhookCalled) {
-                    webhookCalled = true;  // 첫 실행 이후 다시 실행되지 않도록 설정
-                    fetch("https://hooks.zapier.com/hooks/catch/18371653/2l55iaq/?email=" + encodeURIComponent(email), { method: "POST" })
-                        .then(() => {
-                            // Webhook 호출 후 1초 뒤에 인프런 홈페이지로 이동
-                            setTimeout(() => {
-                                window.location.href = "https://www.inflearn.com/";
-                            }, 1000);
-                        })
-                        .catch(() => {
-                            // 실패해도 바로 인프런 홈페이지로 이동
-                            window.location.href = "https://www.inflearn.com/";
-                        });
-                }
+                // 즉시 인프런 홈페이지로 이동
+                window.location.href = "https://www.inflearn.com/";
             } else {
-                // 이메일 파라미터가 없으면 바로 인프런 홈페이지로 이동
+                // 이메일이 없을 경우 바로 이동
                 window.location.href = "https://www.inflearn.com/";
             }
         };
     </script>
 </head>
 <body>
-    <p>잠시만 기다려 주세요. 인프런 홈페이지로 이동중입니다.</p>
+    <p>잠시만 기다려 주세요. 인프런 홈페이지로 이동합니다.</p>
 </body>
 </html>
 
